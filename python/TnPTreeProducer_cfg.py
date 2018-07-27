@@ -74,6 +74,7 @@ varOptions.register(
     )
 
 
+print(sys.argv)
 
 varOptions.parseArguments()
 
@@ -245,6 +246,8 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                         passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
                                         passingMVA80Xwp90 = cms.InputTag("probeEleMVA80Xwp90" ),
                                         passingMVA80Xwp80 = cms.InputTag("probeEleMVA80Xwp80" ),
+                                        passingTight80XNoIso = cms.InputTag("probeEleCutBasedTight80XNoIso" ),
+                                        passingMedium80XNoIso = cms.InputTag("probeEleCutBasedMedium80XNoIso" ),
                                         )
                                     )
 

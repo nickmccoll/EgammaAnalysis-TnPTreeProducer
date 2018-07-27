@@ -60,13 +60,20 @@ def setIDs(process, options):
     #10 GsfEleConversionVetoCut
     #11 GsfEleMissingHitsCut
     
-    #process.probeEleCutBasedVeto = cms.EDProducer("PatElectronNm1Selector",
-    #                                                    input     = cms.InputTag("goodElectrons"),
-    #                                                    cut       = cms.string(options['ELECTRON_CUTS']),
-    #                                                    selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-veto"),
-    #                                                    #cutIndicesToMask = cms.vuint32(2, 3),
-    #                                                    cutNamesToMask = cms.vstring("GsfEleDEtaInCut_0", "GsfEleDPhiInCut_0")
-    #                                                    )
+    process.probeEleCutBasedTight80XNoIso = cms.EDProducer("PatElectronNm1Selector",
+                                                        input     = cms.InputTag("goodElectrons"),
+                                                        cut       = cms.string(options['ELECTRON_CUTS']),
+                                                        selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight"),
+                                                        #cutIndicesToMask = cms.vuint32(2, 3),
+                                                        cutNamesToMask = cms.vstring("GsfEleEffAreaPFIsoCut_0")
+                                                        )
+    process.probeEleCutBasedMedium80XNoIso = cms.EDProducer("PatElectronNm1Selector",
+                                                        input     = cms.InputTag("goodElectrons"),
+                                                        cut       = cms.string(options['ELECTRON_CUTS']),
+                                                        selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium"),
+                                                        #cutIndicesToMask = cms.vuint32(2, 3),
+                                                        cutNamesToMask = cms.vstring("GsfEleEffAreaPFIsoCut_0")
+                                                        )
     
     process.probeEleHLTsafe = process.probeEleCutBasedVeto.clone()
     process.probeEleHLTsafe.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1")

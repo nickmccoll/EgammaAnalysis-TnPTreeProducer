@@ -126,6 +126,39 @@ def setTagsProbes(process, options):
     import EgammaAnalysis.TnPTreeProducer.egmPhotonIDModules_cff   as egmPhoID
     egmEleID.setIDs(process, options)
     egmPhoID.setIDs(process, options)
+    
+    process.eleExtraVar  = cms.EDProducer("PatElectronExtraVariables",
+                                      probes           = cms.InputTag(options['ELECTRON_COLL']),
+#                                       vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),
+                                      pfParticles  = cms.InputTag('packedPFCandidates'),
+                                      rho        = cms.InputTag('fixedGridRhoFastjetCentralNeutral')
+                                      )
+    
+    process.scExtraVar  = cms.EDProducer("SCActivityVarHelper",
+                                  probes           = cms.InputTag("superClusterCands"),
+                                  vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+                                  pfParticles  = cms.InputTag('packedPFCandidates'),
+                                  rho        = cms.InputTag('fixedGridRhoFastjetCentralNeutral'),
+                                  applyVertex = cms.bool(True),
+                                  trkIsoConeSize  = cms.double(0.4),
+                                  trkIsoDeltaEtaVeto  = cms.double(0.03),
+                                  trkIsoDeltaPhiVeto  = cms.double(-1),
+                                  trkIsoConeVeto  = cms.double(-1)
+                                  )
+    process.scExtraVarTight = cms.EDProducer("SCActivityVarHelper",
+                                  probes           = cms.InputTag("superClusterCands"),
+                                  vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+                                  pfParticles  = cms.InputTag('packedPFCandidates'),
+                                  rho        = cms.InputTag('fixedGridRhoFastjetCentralNeutral'),
+                                  applyVertex = cms.bool(True),
+                                  trkIsoConeSize  = cms.double(0.4),
+                                  trkIsoDeltaEtaVeto  = cms.double(0.06),
+                                  trkIsoDeltaPhiVeto  = cms.double(-1),
+                                  trkIsoConeVeto  = cms.double(-1)
+                                  )
+        
+    
+
 
     
 ###################################################################################
@@ -160,6 +193,8 @@ def setSequences(process, options):
     else :                 process.sc_sequence += process.sc_sequenceMiniAOD
     process.sc_sequence += process.probeSC
     process.sc_sequence += process.probeSCEle
+    process.sc_sequence += process.scExtraVar
+    process.sc_sequence += process.scExtraVarTight
 
     process.ele_sequence = cms.Sequence(
         process.probeEleCutBasedVeto      +
@@ -172,6 +207,9 @@ def setSequences(process, options):
         process.probeEleCutBasedTight80X  +
         process.probeEleMVA80Xwp90        +
         process.probeEleMVA80Xwp80        +
+        process.probeEleCutBasedTight80XNoIso  +
+        process.probeEleCutBasedMedium80XNoIso  +
+        process.eleExtraVar        +
         process.probeEle 
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe

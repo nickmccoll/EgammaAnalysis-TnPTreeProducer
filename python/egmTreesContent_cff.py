@@ -18,6 +18,13 @@ SCProbeVariablesToStore = cms.PSet(
     sc_et     = cms.string("et"),
     sc_e      = cms.string("energy"),
     sc_tkIso  = cms.InputTag("recoEcalCandidateHelper:scTkIso"),
+    sc_isoPT  = cms.InputTag("scExtraVar:scIsoPT"),
+    sc_isoDR  = cms.InputTag("scExtraVar:scIsoDR"),
+    sc_isoTrkPT  = cms.InputTag("scExtraVar:scIsoTrkPT"),
+    sc_isoTrkDR  = cms.InputTag("scExtraVar:scIsoTrkDR"),
+    sc_isoTrkPTTight  = cms.InputTag("scExtraVarTight:scIsoTrkPT"),
+    sc_isoTrkDRTight  = cms.InputTag("scExtraVarTight:scIsoTrkDR")
+
     )
 
 EleProbeVariablesToStore = cms.PSet(
@@ -90,6 +97,9 @@ EleProbeVariablesToStore = cms.PSet(
     el_dxy           = cms.InputTag("eleVarHelper:dxy"),
     el_3charge       = cms.string("chargeInfo().isGsfCtfScPixConsistent"),
     el_ecalDriven    = cms.string("ecalDrivenSeed"),
+    el_sip3D         = cms.InputTag("eleExtraVar:sip3D"),
+    el_miniso        = cms.InputTag("eleExtraVar:miniiso"),
+
     
     )
 
